@@ -1,0 +1,53 @@
+### get new alerts
+
+GET  http://localhost:6003/alerts HTTP/1.1
+auth: very-secure-token
+
+### application
+
+GET http://localhost:5000/ HTTP/1.1
+
+###data ingest
+
+POST http://localhost:5003/ingest HTTP/1.1
+content-type: application/json
+#auth: very-secure-token
+
+[
+    {
+        "param_name": "current",
+        "param_units": "A",
+        "param_value": 40
+    },
+    {
+        "param_name": "temperature",
+        "param_units": "C",
+        "param_value": 36
+    },
+    {
+        "param_name": "power",
+        "param_units": "N",
+        "param_value": 560
+    }
+]
+
+### manager
+
+POST http://localhost:5002/update HTTP/1.1
+content-type: application/json
+auth: very-secure-token
+
+{
+    "url":"http://file_server:5001/download-update/app-update.zip", 
+    "target": "app", 
+    "digest": "87c545ea85e29e5a826c5d6d655dea3fc6291ccc6e2b9eeeb14d7f3748942cf", 
+    "digest_alg": "sha256"
+}
+
+
+### get update digest
+GET http://localhost:5001/get-digest/app-update.zip HTTP/1.1
+
+### get archived update file
+GET http://localhost:5001/download-update/app-update.zip HTTP/1.1
+
