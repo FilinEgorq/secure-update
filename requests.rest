@@ -1,6 +1,7 @@
 ### get new alerts
 
 GET  http://localhost:6003/alerts HTTP/1.1
+content-type: application/json
 auth: very-secure-token
 
 ### application
